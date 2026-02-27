@@ -1,4 +1,4 @@
-# Zero Trust Security Platform (SITA) 🔐
+# Zero Trust Security Platform  🔐
 
 **Next-Gen AI Security Operations Center (SOC) Intelligence**
 
