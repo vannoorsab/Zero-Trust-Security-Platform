@@ -1,0 +1,8 @@
+PersonID,PersonType,FullName,Gender,Age,Email,Phone,Department,Role,StudentID,Course,Year,CGPA,Status
+HR001,HR,Ramesh Kumar,Male,35,ramesh.hr@company.com,9876543210,Human Resources,HR Manager,,, , ,Active
+HR002,HR,Sneha Sharma,Female,29,sneha.hr@company.com,9123456780,Human Resources,HR Executive,,, , ,Active
+ST001,Student,Anil Reddy,Male,21,anil.reddy@gmail.com,9012345678,, ,STU1001,Computer Science,3,8.4,Placed
+ST002,Student,Priya Verma,Female,22,priya.verma@gmail.com,9098765432,, ,STU1002,Information Technology,4,7.9,Interview Scheduled
+ST003,Student,Rahul Mehta,Male,20,rahul.mehta@gmail.com,9988776655,, ,STU1003,Mechanical Engineering,2,8.1,Not Placed
+ST004,Student,Kavya Nair,Female,23,kavya.nair@gmail.com,8877665544,, ,STU1004,Electronics,4,8.7,Placed
+ST005,Student,Amit Singh,Male,21,amit.singh@gmail.com,7766554433,, ,STU1005,Civil Engineering,3,7.2,Interview Scheduled

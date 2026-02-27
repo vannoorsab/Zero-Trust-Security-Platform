@@ -1,0 +1,81 @@
+steps:
+  # --- Phase 1: Backend ---
+  # Build Backend Image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-backend'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:latest'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:$COMMIT_SHA'
+      - '-f'
+      - 'backend/Dockerfile'
+      - './backend'
+
+  # Push Backend Image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-backend'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:latest'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:$COMMIT_SHA'
+
+  # Deploy Backend to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'deploy-backend'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'zero-trust-backend'
+      - '--image=us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:$COMMIT_SHA'
+      - '--region=us-central1'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+
+  # --- Phase 2: Frontend ---
+  # Build Frontend Image
+  # We use the generic Docker builder
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-frontend'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/frontend:latest'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/frontend:$COMMIT_SHA'
+      - '-f'
+      - 'Dockerfile.frontend'
+      - '.'
+
+  # Push Frontend Image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-frontend'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/frontend:latest'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/frontend:$COMMIT_SHA'
+
+  # Deploy Frontend to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'deploy-frontend'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'zero-trust-frontend'
+      - '--image=us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/frontend:$COMMIT_SHA'
+      - '--region=us-central1'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/frontend:latest'
+
+options:
+  machineType: 'N1_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: '1800s'

@@ -1,0 +1,15 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '-t'
+  - '${_IMAGE_NAME}'
+  - '--build-arg'
+  - 'NEXT_PUBLIC_API_URL=${_API_URL}'
+  - '-f'
+  - 'Dockerfile.frontend'
+  - '.'
+images:
+- '${_IMAGE_NAME}'
+options:
+  substitutionOption: 'ALLOW_LOOSE'

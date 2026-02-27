@@ -1,0 +1,41 @@
+steps:
+  # Step 1: Build Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-image'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:latest'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:$COMMIT_SHA'
+      - '-f'
+      - 'backend/Dockerfile'
+      - './backend'
+
+  # Step 2: Push to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-image'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:latest'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:$COMMIT_SHA'
+
+  # Step 3: Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    id: 'deploy-cloudrun'
+    args:
+      - 'run'
+      - '--filename=.'
+      - '--image=us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:$COMMIT_SHA'
+      - '--location=us-central1'
+      - '--config=cloud-run-config.yaml'
+
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/zero-trust/backend:$COMMIT_SHA'
+
+options:
+  machineType: 'N1_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: '1800s'

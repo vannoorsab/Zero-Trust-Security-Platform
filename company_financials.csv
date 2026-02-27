@@ -1,0 +1,11 @@
+TransactionID,Date,Department,TransactionType,Description,Amount,PaymentMode,ApprovedBy,Status
+FIN001,2025-01-05,Sales,Income,Product Sales Invoice #INV1001,250000,Bank Transfer,CFO,Approved
+FIN002,2025-01-08,HR,Expense,Employee Salary - January,120000,Bank Transfer,CEO,Approved
+FIN003,2025-01-10,IT,Expense,Cloud Hosting Charges,45000,Credit Card,CTO,Approved
+FIN004,2025-01-12,Marketing,Expense,Social Media Ads,30000,UPI,CMO,Approved
+FIN005,2025-01-15,Finance,Expense,Audit & Compliance Fees,55000,Cheque,CFO,Pending
+FIN006,2025-01-18,Sales,Income,Client Project Payment,180000,Bank Transfer,CFO,Approved
+FIN007,2025-01-20,Operations,Expense,Office Rent - January,80000,Bank Transfer,CEO,Approved
+FIN008,2025-01-22,IT,Expense,Laptop Purchase,95000,Credit Card,CTO,Approved
+FIN009,2025-01-25,Sales,Income,Annual Maintenance Contract,120000,Bank Transfer,CFO,Approved
+FIN010,2025-01-28,HR,Expense,Training & Workshops,25000,Cash,HR Manager,Pending
